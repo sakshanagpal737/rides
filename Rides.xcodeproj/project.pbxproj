@@ -96,6 +96,11 @@
 			children = (
 				62F6B1A32CA765BD00C539A1 /* RidesApp.swift */,
 				62F6B1A52CA765BD00C539A1 /* ContentView.swift */,
+				62F6B1CD2CA78BEA00C539A1 /* Core */,
+				62F6B1D12CA78C4200C539A1 /* Models */,
+				62F6B1D02CA78C3100C539A1 /* Extentions */,
+				62F6B1CF2CA78C1F00C539A1 /* Services */,
+				62F6B1CE2CA78BF200C539A1 /* Utilities */,
 				62F6B1A72CA765BF00C539A1 /* Assets.xcassets */,
 				62F6B1A92CA765BF00C539A1 /* Preview Content */,
 			);
@@ -125,6 +130,65 @@
 				62F6B1C02CA765BF00C539A1 /* RidesUITestsLaunchTests.swift */,
 			);
 			path = RidesUITests;
+			sourceTree = "<group>";
+		};
+		62F6B1CD2CA78BEA00C539A1 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				62F6B1D42CA78CFB00C539A1 /* Components */,
+				62F6B1D32CA78CE000C539A1 /* Views */,
+				62F6B1D22CA78CAA00C539A1 /* ViewModels */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		62F6B1CE2CA78BF200C539A1 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		62F6B1CF2CA78C1F00C539A1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		62F6B1D02CA78C3100C539A1 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
+		62F6B1D12CA78C4200C539A1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		62F6B1D22CA78CAA00C539A1 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		62F6B1D32CA78CE000C539A1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		62F6B1D42CA78CFB00C539A1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,8 +491,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,8 +519,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
