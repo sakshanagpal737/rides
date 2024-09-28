@@ -17,7 +17,6 @@
 		62F6B1D62CA78E1100C539A1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F6B1D52CA78E1100C539A1 /* Color.swift */; };
 		62F6B1D82CA78FB000C539A1 /* VehicleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F6B1D72CA78FB000C539A1 /* VehicleViewModel.swift */; };
 		62F6B1DA2CA7901B00C539A1 /* VehicleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F6B1D92CA7901B00C539A1 /* VehicleListView.swift */; };
-		62F6B1DC2CA790AA00C539A1 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F6B1DB2CA790AA00C539A1 /* NetworkManager.swift */; };
 		62F6B1E02CA7996100C539A1 /* VehicleListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F6B1DF2CA7996100C539A1 /* VehicleListCell.swift */; };
 		62F6B1E22CA7999300C539A1 /* VehicleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F6B1E12CA7999200C539A1 /* VehicleModel.swift */; };
 		62F6B1E42CA79B7B00C539A1 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F6B1E32CA79B7B00C539A1 /* PreviewProvider.swift */; };
@@ -57,7 +56,6 @@
 		62F6B1D52CA78E1100C539A1 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		62F6B1D72CA78FB000C539A1 /* VehicleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleViewModel.swift; sourceTree = "<group>"; };
 		62F6B1D92CA7901B00C539A1 /* VehicleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleListView.swift; sourceTree = "<group>"; };
-		62F6B1DB2CA790AA00C539A1 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		62F6B1DF2CA7996100C539A1 /* VehicleListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleListCell.swift; sourceTree = "<group>"; };
 		62F6B1E12CA7999200C539A1 /* VehicleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleModel.swift; sourceTree = "<group>"; };
 		62F6B1E32CA79B7B00C539A1 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 		62F6B1CE2CA78BF200C539A1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				62F6B1DB2CA790AA00C539A1 /* NetworkManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -352,7 +349,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				62F6B1EA2CA7D44100C539A1 /* VehicleDetailView.swift in Sources */,
-				62F6B1DC2CA790AA00C539A1 /* NetworkManager.swift in Sources */,
 				62F6B1DA2CA7901B00C539A1 /* VehicleListView.swift in Sources */,
 				62F6B1A62CA765BD00C539A1 /* ContentView.swift in Sources */,
 				62F6B1E82CA7C3A000C539A1 /* UIApplication.swift in Sources */,

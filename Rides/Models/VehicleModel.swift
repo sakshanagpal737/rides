@@ -10,8 +10,9 @@ import Foundation
 struct VehicleModel: Codable, Identifiable
 {
     let id: Int?
-    let uid, vin, makeAndModel, color: String?
-    let transmission, driveType, fuelType, carType: String?
+    let vin,carType:String
+    let uid, makeAndModel, color: String?
+    let transmission, driveType, fuelType: String?
     let carOptions, specs: [String]?
     let doors, mileage, kilometrage: Int?
     let licensePlate: String?

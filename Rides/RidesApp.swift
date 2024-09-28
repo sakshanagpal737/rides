@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct RidesApp: App {
     
-    @StateObject private var vm = VehicleViewModel()
+    @StateObject private var vm = VehicleViewModel(inputText: "")
     
     init()
     {
@@ -22,7 +22,7 @@ struct RidesApp: App {
         WindowGroup {
           //  ContentView()
             NavigationView{
-                VehicleListView()
+                VehicleListView(showAlert: false)
                   //  .navigationBarHidden(true)
                 
             }

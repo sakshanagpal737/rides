@@ -24,18 +24,18 @@ class DeveloperPreview
         
     }
     
-    let vehicleVM = VehicleViewModel()
+    let vehicleVM = VehicleViewModel(inputText: "")
     
     let vehicle = VehicleModel(
         id: 2525,
-        uid: "a13b1b24-d9c8-4ca5-b8dd-9da210aa22aa",
-        vin: "44773KBP9P3145529",
-        makeAndModel: "Honda Accord",
-        color: "Blue",
-        transmission: "Automatic",
-        driveType: "RWD",
-        fuelType: "Gasoline Hybrid",
-        carType: "Regular Cab Pickup",
+        vin: "a13b1b24-d9c8-4ca5-b8dd-9da210aa22aa",
+        carType: "44773KBP9P3145529",
+        uid: "Honda Accord",
+        makeAndModel: "Blue",
+        color: "Automatic",
+        transmission: "RWD",
+        driveType: "Gasoline Hybrid",
+        fuelType: "Regular Cab Pickup",
         carOptions: ["Airbag: Passenger",
                      "DVD System",
                      "Fog Lights",

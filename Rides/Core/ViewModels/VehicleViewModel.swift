@@ -6,70 +6,77 @@
 //
 
 import Foundation
-import Combine
+
 
 class VehicleViewModel : ObservableObject
 {
     @Published var vehicleArr:[VehicleModel] = []
     
     @Published var inputText:String = ""
+    @Published var isLoading: Bool = false
+    @Published var sortOption: SortOption = .vin
+    @Published var showAlert:Bool = false
+    
     
    // private let vehicleDataService = VehicleDataService(size: "")
-    private var cancelables = Set<AnyCancellable>()
+
+    enum SortOption {
+        case vin, carType
+    }
     
-    init()
+    init(inputText:String)
     {
-        addSubscribers()
+        self.inputText = inputText
+        fetchVehicles(size: inputText)
        // vehicleDataService.inputSize = inputText
     }
     
-    func fetchVehicles()
+    func fetchVehicles(size:String)
     {
-        let vehicleDataService = VehicleDataService(size: inputText)
-        
-        vehicleArr = vehicleDataService.vehicleArr ?? []
-    }
-    
-    
-    
-    func addSubscribers()
-    {
-        let vehicleDataService = VehicleDataService(size: inputText)
-        
-        vehicleDataService.$vehicleArr
-            .debounce(for: .seconds(2.0), scheduler: DispatchQueue.main)
-            .sink { [weak self] returnedVehicle in
-                self?.vehicleArr = returnedVehicle ?? []
-            }
-            .store(in: &cancelables)
-        
-        
-//        $inputText
-//            .combineLatest(vehicleDataService.$vehicleArr)
-//            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
-//            .map(filterVehicle)
-//            .sink { returnedVehicle in
-//                self.vehicleArr = returnedVehicle
-//            }
-//            .store(in: &cancelables)
-    }
-    
-    
-    private func filterVehicle(text:String,vehicle:[VehicleModel]) -> [VehicleModel]
-    {
-        guard !text.isEmpty else
+        if validateInputStringIsInRange(size: size)
         {
-            return vehicleArr
+            let vehicleDataService = VehicleDataService(size: size)
+            vehicleArr = vehicleDataService.vehicleArr ?? []
+            showAlert = false
         }
-       
-        
-        let sortArr = vehicleArr.sorted { v1, v2 in
-            v1.vin ?? "" > v2.vin ?? ""
+        else
+        {
+            showAlert = true
         }
-        
-        return sortArr
-       
     }
+    
+    func validateInputStringIsInRange(size:String) -> Bool
+    {
+        let num = Int(size) ?? 0
+        
+        if num > 0 && num <= 100
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+        
+    }
+    
+    
+    func reloadData() {
+        isLoading = true
+        fetchVehicles(size: inputText)
+    
+    }
+    
+    private func sortVehicles(sort: SortOption, vehicles: inout [VehicleModel]) {
+        switch sort {
+        case .vin:
+            vehicles.sort(by: { $0.vin < $1.vin })
+        case .carType:
+            vehicles.sort(by: { $0.carType < $1.carType })
+       
+        }
+    }
+    
     
     
 

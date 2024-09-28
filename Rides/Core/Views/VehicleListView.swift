@@ -10,8 +10,10 @@ import SwiftUI
 struct VehicleListView: View {
     
     @State var sizeText:String = ""
+    @State var showActionSheet = false
     @EnvironmentObject private var vehicleVM:VehicleViewModel
     @State var showList:Bool = false
+    @State var showAlert:Bool
     
     var body: some View {
     NavigationStack
@@ -35,16 +37,48 @@ struct VehicleListView: View {
                         
                     }
                 }
+                .toolbar(content: {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            self.showActionSheet.toggle()
+                        } label: {
+                            Image(systemName: "arrow.up.arrow.down")
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                        }
+                        .confirmationDialog("", isPresented: $showActionSheet) {
+                                    showSortOption
+                                }
+                        
+                    }
+                   
+                })
                 .navigationTitle("Vehicle List")
             
         }
+        .alert(isPresented: $showAlert, content: {
+            getAlert()
+        })
     }
+    
+    func getAlert() -> Alert{
+        
+         Alert(title: Text("Please enter a size between 1 to 100"),
+               message: Text(""),
+               primaryButton: .destructive(Text("Okay"), action: {
+             
+                
+         }),
+            secondaryButton: .cancel())
+ }
+    
+  
 }
 
 #Preview {
     NavigationView{
-        VehicleListView()
-            .environmentObject(VehicleViewModel())
+        VehicleListView(showAlert: true)
+            .environmentObject(VehicleViewModel(inputText: "1"))
     }
 }
 
@@ -71,10 +105,12 @@ extension VehicleListView
            
           
             Button(action: {
-                showList = true
                 UIApplication.shared.endEditing()
-                vehicleVM.inputText = sizeText
-                vehicleVM.addSubscribers()
+                vehicleVM.fetchVehicles(size: sizeText)
+                if vehicleVM.showAlert
+                {
+                    showAlert = true
+                }
             }, label: {
                 Text("Show")
                     .padding()
@@ -82,6 +118,7 @@ extension VehicleListView
                     .foregroundColor(Color.themeColor.primaryColor)
                     .cornerRadius(5.0)
             })
+           
             
         }
         .padding()
@@ -104,6 +141,25 @@ extension VehicleListView
         }
         
         .listStyle(.plain)
+    }
+    
+    
+    private var  showSortOption : some View
+    {
+        VStack
+        {
+            Button("Sort By VIN") {
+                vehicleVM.sortOption = .vin
+                vehicleVM.reloadData()
+            }
+            Button("Sort By Car Type")
+            {
+                vehicleVM.sortOption = .carType
+                vehicleVM.reloadData()
+            }
+        }
+       
+        
     }
 }
 

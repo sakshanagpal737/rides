@@ -24,7 +24,6 @@ struct VehicleDetailView: View {
                     VStack
                     {
                         contentCardView
-                        
                         Spacer()
                         
                     }

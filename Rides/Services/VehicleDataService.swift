@@ -6,15 +6,27 @@
 //
 
 import Foundation
-import Combine
+
 
 class VehicleDataService
 {
+    enum NetworkError : LocalizedError
+    {
+        case badURLResponse(url:URL)
+        case unknown
+        
+        var errorDescription: String?
+        {
+            switch self
+            {
+            case .badURLResponse(url : let url): return "Bad response from URL :\(url)"
+            case .unknown : return "Unknown error occured"
+            }
+        }
+    }
    
     @Published var vehicleArr:[VehicleModel]? = nil
-    //var cancelables:Set<AnyCancellable>
     
-    var vehicleSubscription: AnyCancellable?
     var inputSize:String?
     
     init(size:String)
@@ -25,34 +37,29 @@ class VehicleDataService
     
     private func getVehicle(size:String)
     {
-        // Define the URL you want to request
         let apiUrlStr = "https://random-data-api.com/api/vehicle/random_vehicle?size=\(size)"
         
-        // Create a URL object from the string
         if let apiUrl = URL(string: apiUrlStr) {
             
-            // Create a URLSession instance
             let session = URLSession.shared
             
-            // Create a data task using URLSessionDataTask
             let dataTask = session.dataTask(with: apiUrl) { (data, response, error) in
                 
                 // Handle the response
                 
                 // Check for errors
-                if let error = error {
-                    print("Error: \\(error)")
+                if let err = error {
+                    print(NetworkError.badURLResponse(url: apiUrl))
                     return
                 }
                 
                 // Check if data is available
                 guard let responseData = data else {
-                    print("No data received")
+                    print(NetworkError.unknown)
                     return
                 }
                 
                 // Process the received data
-                
                 do
                 {
                     let decoder = JSONDecoder()
@@ -64,33 +71,15 @@ class VehicleDataService
                 }
                 catch
                 {
-                    print("Error parsing JSON: \\(error)")
+                    print("Error parsing JSON: \(error)")
                 }
             }
             
             dataTask.resume()
         } else {
-            print("URL is not valid!")
+            print(NetworkError.badURLResponse(url: URL(string: apiUrlStr)!))
         }
     }
-    
-   /* private func getVehicle(size:String)
-    {
-        guard let url = URL(string:"https://random-data-api.com/api/vehicle/random_vehicle?size=\(size)")  else
-        {
-            return
-        }
-        
-        
-        vehicleSubscription = NetworkManager.download(url: url)
-            .decode(type: [VehicleModel].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: NetworkManager.handleCompletion,
-                  receiveValue: { [weak self] returnedVehicles in
-                self?.vehicleArr = returnedVehicles
-                self?.vehicleSubscription?.cancel()
-            })
-            
-           // print(vehicleArr ?? [])
-    }*/
+   
 }
 
