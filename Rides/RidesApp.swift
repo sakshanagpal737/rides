@@ -9,9 +9,24 @@ import SwiftUI
 
 @main
 struct RidesApp: App {
+    
+    @StateObject private var vm = VehicleViewModel()
+    
+    init()
+    {
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.themeColor.accentColor)]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.themeColor.accentColor)]
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          //  ContentView()
+            NavigationView{
+                VehicleListView()
+                  //  .navigationBarHidden(true)
+                
+            }
+            .environmentObject(vm)
         }
     }
 }

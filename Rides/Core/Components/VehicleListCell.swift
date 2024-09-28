@@ -8,11 +8,28 @@
 import SwiftUI
 
 struct VehicleListCell: View {
+    
+    let vehicle:VehicleModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack
+        {
+            VStack(alignment: .leading)
+            {
+                Text(vehicle.makeAndModel ?? "")
+                    .font(.title)
+                    .bold()
+                Text(vehicle.vin ?? "")
+                    .font(.title2)
+            }
+            
+            Spacer()
+            
+            
+        }
     }
 }
 
 #Preview {
-    VehicleListCell()
+    VehicleListCell(vehicle:DeveloperPreview.instance.vehicle)
 }
