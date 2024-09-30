@@ -14,51 +14,64 @@ struct VehicleListView: View {
     @EnvironmentObject private var vehicleVM:VehicleViewModel
     @State var showList:Bool = false
     @State var showAlert:Bool
+   
     
     var body: some View {
-    NavigationStack
-        {
-            ZStack
-                {
-                    //background Layer
-                    Color.themeColor.backgroundColor.ignoresSafeArea()
-                
-                    // content layer
-                    VStack
+        ZStack {
+            NavigationStack
+            {
+                ZStack
                     {
-                       addVehicleHeader
-                        
-                       Spacer()
-                        
-                        if !sizeText.isEmpty
+                        //background Layer
+                        Color.themeColor.backgroundColor.ignoresSafeArea()
+                    
+                        // content layer
+                        VStack
                         {
+                           addVehicleHeader
+                            
+                           Spacer()
+                            
                             vehicleList
+                            
                         }
-                        
                     }
-                }
-                .toolbar(content: {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            self.showActionSheet.toggle()
-                        } label: {
-                            Image(systemName: "arrow.up.arrow.down")
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .toolbar(content: {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                self.showActionSheet.toggle()
+                            } label: {
+                                Image(systemName: "arrow.up.arrow.down")
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
 
+                            }
+                            .confirmationDialog("", isPresented: $showActionSheet) {
+                                        showSortOption
+                                    }
+                            
                         }
-                        .confirmationDialog("", isPresented: $showActionSheet) {
-                                    showSortOption
-                                }
-                        
-                    }
-                   
-                })
-                .navigationTitle("Vehicle List")
+                       
+                    })
+                    .navigationTitle("Vehicle List")
+                
+            }
+            .alert(isPresented: $showAlert, content: {
+                getAlert()
+        })
+            
+            if vehicleVM.isLoading
+            {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color.themeColor.accentColor))
+                    .scaleEffect(2)
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+                    .background(Color.black.opacity(0.4))
+                    .ignoresSafeArea()
+            }
             
         }
-        .alert(isPresented: $showAlert, content: {
-            getAlert()
-        })
+        
+      
     }
     
     func getAlert() -> Alert{
@@ -72,12 +85,22 @@ struct VehicleListView: View {
             secondaryButton: .cancel())
  }
     
+    func showButtonClicked()
+    {
+        UIApplication.shared.endEditing()
+        vehicleVM.fetchVehicles(size: sizeText)
+      
+        if vehicleVM.showAlert
+        {
+            showAlert = true
+        }
+    }
   
 }
 
 #Preview {
     NavigationView{
-        VehicleListView(showAlert: true)
+        VehicleListView(showAlert: false)
             .environmentObject(VehicleViewModel(inputText: "1"))
     }
 }
@@ -105,12 +128,7 @@ extension VehicleListView
            
           
             Button(action: {
-                UIApplication.shared.endEditing()
-                vehicleVM.fetchVehicles(size: sizeText)
-                if vehicleVM.showAlert
-                {
-                    showAlert = true
-                }
+               showButtonClicked()
             }, label: {
                 Text("Show")
                     .padding()
@@ -135,7 +153,6 @@ extension VehicleListView
                 } label: {
                     VehicleListCell(vehicle: vehicle)
                 }
-
                 
             }
         }

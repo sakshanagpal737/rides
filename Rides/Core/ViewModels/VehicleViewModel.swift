@@ -16,7 +16,7 @@ class VehicleViewModel : ObservableObject
     @Published var isLoading: Bool = false
     @Published var sortOption: SortOption = .vin
     @Published var showAlert:Bool = false
-    
+   
     
    // private let vehicleDataService = VehicleDataService(size: "")
 
@@ -28,15 +28,32 @@ class VehicleViewModel : ObservableObject
     {
         self.inputText = inputText
         fetchVehicles(size: inputText)
-       // vehicleDataService.inputSize = inputText
     }
+    
+    private func getVehicles(size:String)
+    {
+        Task {
+            do {
+                let serviceRequest:VehicleDataService = VehicleDataService()
+                let vehicles = try await serviceRequest.fetchVehicleWithAsyncURLSession(size: size)
+                isLoading = false
+                self.vehicleArr = vehicles
+                
+            } catch {
+                print("Request failed with error: \(error)")
+            }
+        }
+    }
+    
     
     func fetchVehicles(size:String)
     {
         if validateInputStringIsInRange(size: size)
         {
-            let vehicleDataService = VehicleDataService(size: size)
-            vehicleArr = vehicleDataService.vehicleArr ?? []
+            isLoading = true
+            DispatchQueue.main.async {
+                self.getVehicles(size: size)
+            }
             showAlert = false
         }
         else
@@ -77,7 +94,22 @@ class VehicleViewModel : ObservableObject
         }
     }
     
-    
+    func calculateCarbonEmission(kilometerage:Int) -> [Double]
+    {
+        var carbonEmissionArr:[Double] = []
+        if kilometerage > 5000
+        {
+            carbonEmissionArr.append(5000)
+            let remaining = Double(kilometerage - 5000) * 1.5
+            carbonEmissionArr.append(remaining)
+        }
+        else
+        {
+            carbonEmissionArr.append(Double(kilometerage))
+        }
+        
+        return carbonEmissionArr
+    }
     
 
     

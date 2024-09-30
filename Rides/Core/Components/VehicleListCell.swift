@@ -19,7 +19,7 @@ struct VehicleListCell: View {
                 Text(vehicle.makeAndModel ?? "")
                     .font(.title)
                     .bold()
-                Text(vehicle.vin ?? "")
+                Text(vehicle.vin)
                     .font(.title2)
             }
             

@@ -23,13 +23,17 @@ struct VehicleDetailView: View {
                     // content layer
                     VStack
                     {
+                        Spacer()
                         contentCardView
                         Spacer()
-                        
+                        carbonEmissionCards
                     }
                     
                 }
             .navigationTitle(vehicle.makeAndModel ?? "")
+            .onAppear(perform: {
+                
+            })
         }
     }
 }
@@ -74,7 +78,7 @@ extension VehicleDetailView
                 Text("VIN")
                     .bold()
                 Spacer()
-                Text(vehicle.vin ?? "")
+                Text(vehicle.vin)
             }
             .padding(.vertical)
             
@@ -83,7 +87,7 @@ extension VehicleDetailView
                 Text("Car Type")
                     .bold()
                 Spacer()
-                Text(vehicle.carType ?? "")
+                Text(vehicle.carType)
             }
             .padding(.vertical)
             
@@ -93,5 +97,35 @@ extension VehicleDetailView
         .font(.title3)
         .padding()
        
+    }
+    
+    private var carbonEmissionCards : some View
+    {
+        VStack
+        {
+            ScrollView(.horizontal)
+            {
+                HStack(spacing:0)
+                {
+                    ForEach(0..<20) { index in
+                        Rectangle()
+                            .frame(width: 300, height: 400)
+                            .cornerRadius(10)
+                            .overlay {
+                                Text("\(index)")
+                                    .foregroundColor(.white)
+                                    .font(.largeTitle)
+                            }
+                            .id(index)
+                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                            .padding(10)
+                            
+                    }
+                }
+                
+            }
+            .ignoresSafeArea()
+           
+        }
     }
 }
