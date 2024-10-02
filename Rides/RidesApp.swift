@@ -11,6 +11,7 @@ import SwiftUI
 struct RidesApp: App {
     
     @StateObject private var vm = VehicleViewModel(inputText: "")
+    @State private var showLaunchView: Bool = true
     
     init()
     {
@@ -20,11 +21,21 @@ struct RidesApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView{
-                VehicleListView(showAlert: false)
-                
+            ZStack
+            {
+                NavigationView {
+                    VehicleListView(showAlert: false)
+                }
+                .environmentObject(vm)
+
+                ZStack {
+                    if showLaunchView {
+                        LaunchView(showLaunchView: $showLaunchView)
+                            .transition(.move(edge: .leading))
+                    }
+                }
+                .zIndex(2.0)
             }
-            .environmentObject(vm)
         }
     }
 }
