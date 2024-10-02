@@ -31,11 +31,11 @@ struct VehicleDetailView: View {
                     
                 }
             .navigationTitle(vehicle.makeAndModel ?? "")
-            .onAppear(perform: {
-                
-            })
+          
         }
     }
+    
+    
 }
 
 #Preview {
@@ -101,31 +101,40 @@ extension VehicleDetailView
     
     private var carbonEmissionCards : some View
     {
-        VStack
-        {
+        
             ScrollView(.horizontal)
             {
                 HStack(spacing:0)
                 {
-                    ForEach(0..<20) { index in
+                    ForEach(vehicle.carbonEmission, id: \.self) { item in
                         Rectangle()
-                            .frame(width: 300, height: 400)
+                            .foregroundColor(Color.themeColor.backgroundColor)
+                            .frame(width: 250, height: 400)
+                            .overlay(content: {
+                                VStack
+                                {
+                                    Image(systemName: "car.rear.waves.up.fill")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                    
+                                    Text("Carbon Emission")
+                                        .font(.caption)
+                
+                                    Text("\(item)")
+                                        .font(.title)
+                                }
+                            })
                             .cornerRadius(10)
-                            .overlay {
-                                Text("\(index)")
-                                    .foregroundColor(.white)
-                                    .font(.largeTitle)
-                            }
-                            .id(index)
-                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                            .shadow(radius: 10)
+                            .frame(maxWidth: .infinity)
                             .padding(10)
-                            
+                        
                     }
                 }
                 
             }
-            .ignoresSafeArea()
-           
-        }
+    
     }
+    
+    
 }

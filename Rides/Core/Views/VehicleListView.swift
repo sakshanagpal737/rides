@@ -166,13 +166,11 @@ extension VehicleListView
         VStack
         {
             Button("Sort By VIN") {
-                vehicleVM.sortOption = .vin
-                vehicleVM.reloadData()
+                vehicleVM.reloadData(sortOption: .vin)
             }
             Button("Sort By Car Type")
             {
-                vehicleVM.sortOption = .carType
-                vehicleVM.reloadData()
+                vehicleVM.reloadData(sortOption: .carType)
             }
         }
        

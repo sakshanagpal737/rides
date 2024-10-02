@@ -11,15 +11,14 @@ import Foundation
 class VehicleViewModel : ObservableObject
 {
     @Published var vehicleArr:[VehicleModel] = []
-    
     @Published var inputText:String = ""
     @Published var isLoading: Bool = false
-    @Published var sortOption: SortOption = .vin
     @Published var showAlert:Bool = false
+   // @Published var carbonEmissionArr:[String] = []
+    
+    var inputTextValidator:InputTextValidator = InputTextValidator()
    
     
-   // private let vehicleDataService = VehicleDataService(size: "")
-
     enum SortOption {
         case vin, carType
     }
@@ -36,8 +35,12 @@ class VehicleViewModel : ObservableObject
             do {
                 let serviceRequest:VehicleDataService = VehicleDataService()
                 let vehicles = try await serviceRequest.fetchVehicleWithAsyncURLSession(size: size)
-                isLoading = false
-                self.vehicleArr = vehicles
+                DispatchQueue.main.async { [self] in
+                    self.vehicleArr = vehicles
+                    self.reloadData(sortOption: .vin)
+                    self.isLoading = false
+                    
+                }
                 
             } catch {
                 print("Request failed with error: \(error)")
@@ -48,7 +51,7 @@ class VehicleViewModel : ObservableObject
     
     func fetchVehicles(size:String)
     {
-        if validateInputStringIsInRange(size: size)
+        if inputTextValidator.validateInputStringIsInRange(size: size)
         {
             isLoading = true
             DispatchQueue.main.async {
@@ -62,54 +65,31 @@ class VehicleViewModel : ObservableObject
         }
     }
     
-    func validateInputStringIsInRange(size:String) -> Bool
-    {
-        let num = Int(size) ?? 0
-        
-        if num > 0 && num <= 100
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-        
-    }
-    
-    
-    func reloadData() {
+
+    func reloadData(sortOption:SortOption) {
         isLoading = true
-        fetchVehicles(size: inputText)
+        self.vehicleArr = sortVehicles(sort:sortOption , vehicles: self.vehicleArr)
     
     }
     
-    private func sortVehicles(sort: SortOption, vehicles: inout [VehicleModel]) {
+    private func sortVehicles(sort: SortOption, vehicles:[VehicleModel]) -> [VehicleModel]
+    {
+        var tempArr:[VehicleModel] = []
+        
         switch sort {
         case .vin:
-            vehicles.sort(by: { $0.vin < $1.vin })
+            tempArr = vehicles.sorted(by: { $0.vin < $1.vin})
         case .carType:
-            vehicles.sort(by: { $0.carType < $1.carType })
-       
-        }
-    }
-    
-    func calculateCarbonEmission(kilometerage:Int) -> [Double]
-    {
-        var carbonEmissionArr:[Double] = []
-        if kilometerage > 5000
-        {
-            carbonEmissionArr.append(5000)
-            let remaining = Double(kilometerage - 5000) * 1.5
-            carbonEmissionArr.append(remaining)
-        }
-        else
-        {
-            carbonEmissionArr.append(Double(kilometerage))
+            tempArr = vehicles.sorted(by: { $0.carType < $1.carType })
         }
         
-        return carbonEmissionArr
+        self.isLoading = false
+        
+        return tempArr
     }
+    
+   
+ 
     
 
     

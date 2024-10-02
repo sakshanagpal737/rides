@@ -20,10 +20,8 @@ struct RidesApp: App {
     
     var body: some Scene {
         WindowGroup {
-          //  ContentView()
             NavigationView{
                 VehicleListView(showAlert: false)
-                  //  .navigationBarHidden(true)
                 
             }
             .environmentObject(vm)

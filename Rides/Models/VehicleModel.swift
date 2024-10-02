@@ -28,4 +28,13 @@ struct VehicleModel: Codable, Identifiable
            case specs, doors, mileage, kilometrage
            case licensePlate = "license_plate"
        }
+    
+    
+    var carbonEmission:[String]
+    {
+        let carbonEmissionCal = CarbonEmissionCalculator(kilometerage: kilometrage ?? 0)
+        let arr:[String] = carbonEmissionCal.calculateCarbonEmission(kilometerage: kilometrage ?? 0)
+        
+        return arr
+    }
 }

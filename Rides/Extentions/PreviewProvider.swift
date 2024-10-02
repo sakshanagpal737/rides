@@ -24,7 +24,7 @@ class DeveloperPreview
         
     }
     
-    let vehicleVM = VehicleViewModel(inputText: "")
+    let vehicleVM = VehicleViewModel(inputText: "1")
     
     let vehicle = VehicleModel(
         id: 2525,
